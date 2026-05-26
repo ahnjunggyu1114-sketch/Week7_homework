@@ -1,7 +1,7 @@
 export const restaurants = [
   {
     id: 1,
-    name: "마싯는 떡볶이",
+    name: "떡볶이",
     category: "분식",
     rating: 4.9,
     image: "/src/assets/1.jpeg",
@@ -50,7 +50,7 @@ export const restaurants = [
   },
   {
     id: 5,
-    name: "역전우동",
+    name: "우동",
     category: "분식",
     rating: 4.6,
     image: "/src/assets/5.jpeg",
@@ -60,4 +60,40 @@ export const restaurants = [
       { id: 803, name: "비빔우동", price: 5500 },
     ],
   },
-];
+
+ {
+    id: 6,
+    name: "엽기 떡볶이",
+    category: "분식",
+    rating: 4.7,
+    image: "/src/assets/6.jpeg",
+    menus: [
+      { id: 601, name: "엽기 떡볶이", price: 20000 },
+      { id: 602, name: "치즈 떡볶이", price: 22000 },
+      { id: 603, name: "로제 떡볶이", price: 24000 },
+    ],
+  },
+  {
+    id: 7,
+    name: "칼국수",
+    category: "분식",
+    rating: 4.5,
+    image: "/src/assets/7.jpeg",
+    menus: [
+      { id: 701, name: "칼국수", price: 9000 },
+      { id: 702, name: "콩국수", price: 8000 },
+      { id: 703, name: "냉면", price: 7800 },
+    ],
+  },
+  {
+    id: 8,
+    name: "청년 다방",
+    category: "분식",
+    rating: 4.4,
+    image: "/src/assets/8.jpeg",
+    menus: [
+      { id: 801, name: "라볶이", price: 9500 },
+      { id: 802, name: "치즈볼", price: 4000 },
+      { id: 803, name: "계란말이", price: 7000 },
+    ],
+  } ]

@@ -17,7 +17,7 @@ export default function Navbar() {
       {/* 모바일 */}
       <div className="dt:hidden">
         <div className="flex items-center justify-between">
-          <span className="text-xl font-bold">🍢 분식 골라</span>
+          <span className="text-xl font-bold">🍢 분식 배달</span>
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="text-2xl"
