@@ -1,3 +1,4 @@
+import Navbar from "../components/Navbar";
 import MenuModal from "../components/MenuModal";
 import { useState } from "react";
 import RestaurantCard from "../components/RestaurantCard";
@@ -11,6 +12,7 @@ export default function MainPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+          <Navbar />
 
       {/* 카드 그리드 */}
       <main className="max-w-7xl mx-auto px-4 py-8">

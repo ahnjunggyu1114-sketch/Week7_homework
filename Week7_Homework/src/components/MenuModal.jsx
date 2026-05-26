@@ -28,7 +28,7 @@ export default function MenuModal({ restaurant, onClose }) {
               className="flex justify-between items-center py-2 border-b border-gray-50"
             >
               <span className="text-sm font-medium">{menu.name}</span>
-              <span className="text-sm font-bold text-pink-500">
+              <span className="text-sm font-bold text-teal-400">
                 {menu.price.toLocaleString()}원
               </span>
             </li>
