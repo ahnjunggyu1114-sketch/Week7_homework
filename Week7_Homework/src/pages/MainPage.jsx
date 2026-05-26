@@ -1,3 +1,4 @@
+import MenuModal from "../components/MenuModal";
 import { useState } from "react";
 import RestaurantCard from "../components/RestaurantCard";
 import { restaurants } from "../data/restaurants";
@@ -23,6 +24,14 @@ export default function MainPage() {
           ))}
         </div>
       </main>
+      {/* selectedRestaurant 가 있을 때만 모달 보여줌 */}
+      {selectedRestaurant && (
+        <MenuModal
+          restaurant={selectedRestaurant}
+          onClose={() => setSelectedRestaurant(null)}
+          // onClose: 닫기 누르면 null로 초기화 → 모달 사라짐
+        />
+      )}
 
     </div>
   );
