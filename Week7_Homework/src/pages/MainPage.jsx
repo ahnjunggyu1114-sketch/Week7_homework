@@ -9,7 +9,6 @@ export default function MainPage() {
 
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const [quantities, setQuantities] = useState(() => {
-  // 페이지 로드할 때 로컬스토리지에서 불러오기
   const saved = localStorage.getItem("quantities");
   return saved ? JSON.parse(saved) : {};
 });
