@@ -1,11 +1,5 @@
-import { useState } from "react";
+export default function MenuModal({ restaurant, onClose, quantities, setQuantities }) {
 
-export default function MenuModal({ restaurant, onClose }) {
-
-  // 각 메뉴 수량 기억하는 state
-  // { 메뉴id: 수량 } 형태
-  // 예: { 101: 2, 102: 1 } = 떡볶이 2개, 순대 1개
-  const [quantities, setQuantities] = useState({});
 
   // 담기 버튼 클릭 → 수량 1로 설정
   const handleAdd = (menuId) => {
