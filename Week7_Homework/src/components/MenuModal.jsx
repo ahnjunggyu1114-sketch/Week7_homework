@@ -1,4 +1,34 @@
+import { useState } from "react";
+
 export default function MenuModal({ restaurant, onClose }) {
+
+  // 각 메뉴 수량 기억하는 state
+  // { 메뉴id: 수량 } 형태
+  // 예: { 101: 2, 102: 1 } = 떡볶이 2개, 순대 1개
+  const [quantities, setQuantities] = useState({});
+
+  // 담기 버튼 클릭 → 수량 1로 설정
+  const handleAdd = (menuId) => {
+    setQuantities({ ...quantities, [menuId]: 1 });
+  };
+
+  // + 버튼 → 수량 1 증가
+  const handleIncrease = (menuId) => {
+    setQuantities({ ...quantities, [menuId]: quantities[menuId] + 1 });
+  };
+
+  // - 버튼 → 수량 1 감소
+  // 0이 되면 담기 버튼으로 돌아옴
+  const handleDecrease = (menuId) => {
+    if (quantities[menuId] === 1) {
+      const newQuantities = { ...quantities };
+      delete newQuantities[menuId];
+      setQuantities(newQuantities);
+    } else {
+      setQuantities({ ...quantities, [menuId]: quantities[menuId] - 1 });
+    }
+  };
+
   return (
     <div
       className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center"
@@ -24,22 +54,44 @@ export default function MenuModal({ restaurant, onClose }) {
         <ul className="p-5 flex flex-col gap-3">
           {restaurant.menus.map((menu) => (
             <li
-  key={menu.id}
-  className="flex justify-between items-center py-2 border-b border-gray-50 hover:bg-teal-50 rounded-lg px-2 cursor-pointer transition-colors"
->
-  <span className="text-sm font-medium">{menu.name}</span>
-  <div className="flex items-center gap-3">
-    <span className="text-sm font-bold text-teal-400">
-      {menu.price.toLocaleString()}원
-    </span>
-    {/* 담기 버튼 */}
-    <button className="bg-teal-400 text-white px-3 py-1 rounded-full text-xs font-bold hover:bg-teal-500 transition-colors">
-      담기
-    </button>
-  </div>
-</li>
+              key={menu.id}
+              className="flex justify-between items-center py-2 border-b border-gray-50 hover:bg-teal-50 rounded-lg px-2 transition-colors"
+            >
+              <span className="text-sm font-medium">{menu.name}</span>
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-bold text-teal-400">
+                  {menu.price.toLocaleString()}원
+                </span>
 
-
+                {/* 수량 있으면 - 1 + 버튼, 없으면 담기 버튼 */}
+                {quantities[menu.id] ? (
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => handleDecrease(menu.id)}
+                      className="w-7 h-7 rounded-full bg-teal-400 text-white font-bold hover:bg-teal-500"
+                    >
+                      -
+                    </button>
+                    <span className="text-sm font-bold w-4 text-center">
+                      {quantities[menu.id]}
+                    </span>
+                    <button
+                      onClick={() => handleIncrease(menu.id)}
+                      className="w-7 h-7 rounded-full bg-teal-400 text-white font-bold hover:bg-teal-500"
+                    >
+                      +
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    onClick={() => handleAdd(menu.id)}
+                    className="bg-teal-400 text-white px-3 py-1 rounded-full text-xs font-bold hover:bg-teal-500 transition-colors"
+                  >
+                    담기
+                  </button>
+                )}
+              </div>
+            </li>
           ))}
         </ul>
 
