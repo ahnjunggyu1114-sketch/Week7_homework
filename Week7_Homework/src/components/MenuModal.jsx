@@ -24,14 +24,22 @@ export default function MenuModal({ restaurant, onClose }) {
         <ul className="p-5 flex flex-col gap-3">
           {restaurant.menus.map((menu) => (
             <li
-              key={menu.id}
-              className="flex justify-between items-center py-2 border-b border-gray-50"
-            >
-              <span className="text-sm font-medium">{menu.name}</span>
-              <span className="text-sm font-bold text-teal-400">
-                {menu.price.toLocaleString()}원
-              </span>
-            </li>
+  key={menu.id}
+  className="flex justify-between items-center py-2 border-b border-gray-50 hover:bg-teal-50 rounded-lg px-2 cursor-pointer transition-colors"
+>
+  <span className="text-sm font-medium">{menu.name}</span>
+  <div className="flex items-center gap-3">
+    <span className="text-sm font-bold text-teal-400">
+      {menu.price.toLocaleString()}원
+    </span>
+    {/* 담기 버튼 */}
+    <button className="bg-teal-400 text-white px-3 py-1 rounded-full text-xs font-bold hover:bg-teal-500 transition-colors">
+      담기
+    </button>
+  </div>
+</li>
+
+
           ))}
         </ul>
 
