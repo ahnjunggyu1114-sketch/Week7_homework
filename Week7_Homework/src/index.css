@@ -4,3 +4,7 @@
   --breakpoint-ph: 402px;
   --breakpoint-dt: 1725px;
 }
+
+body {
+  background-color: #F7F7F7;
+}
