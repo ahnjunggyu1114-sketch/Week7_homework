@@ -1,12 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import paymentBox from "../components/PaymentBox";
 import PaymentBox from "../components/PaymentBox";
+import ShoppingCart from "../components/ShoppingCart";
+import mockData from "../data/shopping_mockdata.js"
+
 
 const Payment = () => {
   const navigate = useNavigate();
 
   // 나중에 실제 받아온 데이터로 교체
-  const cartItems = [];
+  const cartItems = mockData;
 
   const isEmpty = cartItems.length === 0;
 
@@ -22,17 +25,10 @@ const Payment = () => {
             </div>
         ) : (
             <div className="">
-                <div className="">
-                    {cartItems.map((item, index) => (
-                    <div key={index} className="">
-                        <p>{item.restaurant}</p>
-                        <p>{item.menu}</p>
-                        <p>{item.price}</p>
-                        <p>{item.count}</p>
-                    </div>
-                    ))}
-                </div>
-            </div> 
+                {cartItems.map((restaurant) => (
+                    <ShoppingCart key={restaurant.id} restaurant={restaurant}  />
+                ))}
+            </div>
         )}
         <div className="">
             <PaymentBox />
