@@ -1,11 +1,12 @@
 import { useState } from "react";
-
+import { useNavigate } from "react-router-dom";
 
 
 
 const PaymentBox = ( { totalprice } ) => {
     const [selectedMethod, setSelectedMethod] = useState("");
-
+    const navigate = useNavigate();
+    
     return (
         <div className="py-[56px] px-[48px] rounded-[20px] bg-[#FFFFFF]">
             <h1 className=" pb-[60px] text-center text-[36px] font-bold">결제하기</h1>
@@ -73,6 +74,13 @@ const PaymentBox = ( { totalprice } ) => {
                             ? "bg-[#F0485F] text-white border-[#F0485F]"
                             : "bg-[#F7F7F7] text-[#9A9A9A] border-transparent"
                     }`}
+                    onClick={() => {
+                        if (!selectedMethod) {
+                            alert("결제 방법을 선택해주세요.");
+                            return;
+                        }
+                        navigate("/complete");
+                }}
                 >
                     {totalprice.toLocaleString()}원 결제하기
                 </button>

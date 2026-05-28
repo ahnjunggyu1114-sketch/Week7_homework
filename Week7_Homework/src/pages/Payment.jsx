@@ -5,12 +5,15 @@ import ShoppingCart from "../components/ShoppingCart";
 import mockData from "../data/shopping_mockdata.js"
 import Navbar from "../components/Navbar";
 import { restaurants } from "../data/restaurants";
+import { useState } from "react";
 
 
 
 const Payment = () => {
     const navigate = useNavigate();
-    const quantities = JSON.parse(localStorage.getItem("quantities")) || {};
+    const [quantities, setQuantities] = useState(
+        JSON.parse(localStorage.getItem("quantities")) || {}
+    );
 
     const cartItems = restaurants
         .map((restaurant) => {
@@ -37,6 +40,40 @@ const Payment = () => {
 
     const isEmpty = cartItems.length === 0;
 
+    const handlePlus = (menuId) => {
+        const newQuantities = {
+            ...quantities,
+            [menuId]: (quantities[menuId] || 0) + 1,
+        };
+        setQuantities(newQuantities);
+        localStorage.setItem("quantities", JSON.stringify(newQuantities));
+    };
+
+    const handleMinus = (menuId) => {
+        if (!quantities[menuId]) return;
+
+        if (quantities[menuId] === 1) {
+            const newQuantities = { ...quantities };
+            delete newQuantities[menuId];
+            setQuantities(newQuantities);
+            localStorage.setItem("quantities", JSON.stringify(newQuantities));
+        } else {
+            const newQuantities = {
+            ...quantities,
+            [menuId]: quantities[menuId] - 1,
+            };
+            setQuantities(newQuantities);
+            localStorage.setItem("quantities", JSON.stringify(newQuantities));
+        }
+    };
+
+    const handleDelete = (menuId) => {
+        const newQuantities = { ...quantities };
+        delete newQuantities[menuId];
+        setQuantities(newQuantities);
+        localStorage.setItem("quantities", JSON.stringify(newQuantities));
+    };
+
     return (
         <div>
             <Navbar />
@@ -52,7 +89,13 @@ const Payment = () => {
                 ) : (
                     <div className="">
                         {cartItems.map((restaurant) => (
-                            <ShoppingCart key={restaurant.id} restaurant={restaurant}  />
+                            <ShoppingCart
+                                key={restaurant.id}
+                                restaurant={restaurant}
+                                onPlus={handlePlus}
+                                onMinus={handleMinus}
+                                onDelete={handleDelete}
+                            />
                         ))}
                     </div>
                 )}
