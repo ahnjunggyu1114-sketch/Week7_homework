@@ -3,7 +3,7 @@ import { useState } from "react";
 
 
 
-const PaymentBox = () => {
+const PaymentBox = ( { totalprice } ) => {
     const [selectedMethod, setSelectedMethod] = useState("");
 
     return (
@@ -13,7 +13,7 @@ const PaymentBox = () => {
             <div className="pb-[120px]">
                 <p className="text-[#F0485F] text-[20px] pb-[32px]">결제 방법</p>
 
-                <div className="grid grid-cols-2 gap-y-[24px] gap-x-[32px]">
+                <div className="flex flex-col justify-center items-center dt:grid dt:grid-cols-2 gap-y-[24px] gap-x-[32px]">
 
                     <button 
                         onClick={() => setSelectedMethod("카카오페이")}
@@ -63,7 +63,7 @@ const PaymentBox = () => {
 
             <div className="pb-[28px] flex flex-row justify-between ">
                 <p className="text-[20px] font-bold">총 결제금액</p>
-                <p className="text-[20px] font-bold">00,000원</p>
+                <p className="text-[20px] font-bold">{totalprice.toLocaleString()}원</p>            
             </div>
 
             <div className="flex flex-row justify-center">
@@ -74,7 +74,7 @@ const PaymentBox = () => {
                             : "bg-[#F7F7F7] text-[#9A9A9A] border-transparent"
                     }`}
                 >
-                    00,000원 결제하기
+                    {totalprice.toLocaleString()}원 결제하기
                 </button>
             </div>
         </div>
