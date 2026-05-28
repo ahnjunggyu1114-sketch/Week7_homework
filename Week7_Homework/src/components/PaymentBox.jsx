@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 
-
-const PaymentBox = () => {
+const PaymentBox = ( { totalprice } ) => {
     const [selectedMethod, setSelectedMethod] = useState("");
-
+    const navigate = useNavigate();
+    
     return (
         <div className="py-[56px] px-[48px] rounded-[20px] bg-[#FFFFFF]">
             <h1 className=" pb-[60px] text-center text-[36px] font-bold">결제하기</h1>
@@ -13,7 +14,7 @@ const PaymentBox = () => {
             <div className="pb-[120px]">
                 <p className="text-[#F0485F] text-[20px] pb-[32px]">결제 방법</p>
 
-                <div className="grid grid-cols-2 gap-y-[24px] gap-x-[32px]">
+                <div className="flex flex-col justify-center items-center dt:grid dt:grid-cols-2 gap-y-[24px] gap-x-[32px]">
 
                     <button 
                         onClick={() => setSelectedMethod("카카오페이")}
@@ -63,7 +64,7 @@ const PaymentBox = () => {
 
             <div className="pb-[28px] flex flex-row justify-between ">
                 <p className="text-[20px] font-bold">총 결제금액</p>
-                <p className="text-[20px] font-bold">00,000원</p>
+                <p className="text-[20px] font-bold">{totalprice.toLocaleString()}원</p>            
             </div>
 
             <div className="flex flex-row justify-center">
@@ -73,8 +74,15 @@ const PaymentBox = () => {
                             ? "bg-[#F0485F] text-white border-[#F0485F]"
                             : "bg-[#F7F7F7] text-[#9A9A9A] border-transparent"
                     }`}
+                    onClick={() => {
+                        if (!selectedMethod) {
+                            alert("결제 방법을 선택해주세요.");
+                            return;
+                        }
+                        navigate("/complete");
+                }}
                 >
-                    00,000원 결제하기
+                    {totalprice.toLocaleString()}원 결제하기
                 </button>
             </div>
         </div>
