@@ -2,6 +2,7 @@ import RegisterCard from "./RegisterCard";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import userData from "../data/userData";
+import useAuthStore from "../stores/useAuthStore";
 
 
 
@@ -12,6 +13,7 @@ const LoginCard = () => {
     const [buttonOn, setButtonOn] = useState(false);
 
     const navigate = useNavigate();
+    const setUser = useAuthStore((state) => state.setUser);
 
     const handleClickRegister = () => {
         setIsRegisterOpen(true);
@@ -41,7 +43,7 @@ const LoginCard = () => {
             return;
         }
 
-        localStorage.setItem("User", JSON.stringify(foundUser));
+        setUser(foundUser);        
         alert("로그인 성공");
         navigate("/");
     };
