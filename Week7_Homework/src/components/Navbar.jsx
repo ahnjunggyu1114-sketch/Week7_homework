@@ -6,7 +6,7 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   return (
-    <nav className="bg-teal-400 text-white px-6 py-4">
+    <nav className="bg-[#F0485F] text-white px-6 py-4">
 
       {/* 데스크탑 */}
       <div className="hidden dt:flex items-center justify-between max-w-7xl mx-auto">
@@ -49,7 +49,7 @@ export default function Navbar() {
             </button>
             <button
               onClick={() => navigate("/login")}
-              className="bg-white text-teal-400 px-4 py-2 rounded-full font-bold w-full"
+              className="bg-white text-[#F0485F] px-4 py-2 rounded-full font-bold w-full"
             >
               로그인
             </button>
