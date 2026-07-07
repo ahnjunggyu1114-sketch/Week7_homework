@@ -20,7 +20,7 @@ export default function Navbar() {
           </button>
           <button
             onClick={() => navigate("/login")}
-            className="bg-white text-teal-400 px-4 py-2 rounded-full font-bold hover:opacity-90"
+            className="bg-white text-[#F0485F] px-4 py-2 rounded-[16px] font-bold hover:opacity-90"
           >
             로그인
           </button>
@@ -49,7 +49,7 @@ export default function Navbar() {
             </button>
             <button
               onClick={() => navigate("/login")}
-              className="bg-white text-[#F0485F] px-4 py-2 rounded-full font-bold w-full"
+              className="bg-white text-[#F0485F] px-4 py-2 rounded-[16px] font-bold w-full"
             >
               로그인
             </button>

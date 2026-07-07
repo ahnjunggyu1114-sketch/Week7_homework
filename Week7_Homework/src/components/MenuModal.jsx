@@ -27,7 +27,7 @@ export default function MenuModal({ restaurant, onClose, quantities, setQuantiti
       className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="bg-white w-full max-w-sm rounded-2xl max-h-[80vh] overflow-y-auto mx-4">
+      <div className="bg-white w-full max-w-sm rounded-[20px] max-h-[80vh] overflow-y-auto mx-4">
 
         {/* 헤더 */}
         <div className="flex justify-between items-center p-5 border-b border-gray-100">
@@ -60,7 +60,7 @@ export default function MenuModal({ restaurant, onClose, quantities, setQuantiti
                     <button
                       key={option}
                       onClick={() => setSelectedOptions({ ...selectedOptions, [menu.id]: option })}
-                      className={`px-2 py-0.5 text-xs rounded-full border transition-colors ${
+                      className={`px-2 py-0.5 text-xs rounded-[20px] border transition-colors ${
                         selectedOptions[menu.id] === option
                           ? "border-[#F0485F] bg-[#F0485F] text-white"
                           : "border-[#F0485F] text-[#F0485F] hover:bg-pink-50"
@@ -77,14 +77,14 @@ export default function MenuModal({ restaurant, onClose, quantities, setQuantiti
                 {quantities[menu.id] ? (
                   <div className="flex items-center gap-2">
                     <button onClick={() => handleDecrease(menu.id)}
-                      className="w-7 h-7 rounded-full bg-[#F0485F] text-white font-bold">-</button>
+                      className="w-7 h-7 rounded-[20px] bg-[#F0485F] text-white font-bold">-</button>
                     <span className="text-sm font-bold w-4 text-center">{quantities[menu.id]}</span>
                     <button onClick={() => handleIncrease(menu.id)}
-                      className="w-7 h-7 rounded-full bg-[#F0485F] text-white font-bold">+</button>
+                      className="w-7 h-7 rounded-[16px] bg-[#F0485F] text-white font-bold">+</button>
                   </div>
                 ) : (
                   <button onClick={() => handleAdd(menu.id)}
-                    className="bg-[#F0485F] text-white px-3 py-1 rounded-full text-xs font-bold">
+                    className="bg-[#F0485F] text-white px-3 py-1 rounded-[16px] text-xs font-bold">
                     담기
                   </button>
                 )}
