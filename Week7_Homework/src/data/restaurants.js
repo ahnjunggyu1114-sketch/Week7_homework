@@ -18,9 +18,9 @@ export const restaurants = [
     rating: 4.6,
     image: "/src/assets/2.jpg",
     menus: [
-      { id: 201, name: "참치김밥", price: 3500 },
-      { id: 202, name: "치즈김밥", price: 4000 },
-      { id: 203, name: "라면", price: 4000 },
+      { id: 201, name: "참치김밥", price: 3500, options: ["기본", "마요네즈 추가", "치즈 추가"] },
+      { id: 202, name: "치즈김밥", price: 4000, options: ["기본", "마요네즈 추가", "치즈 추가"] },
+      { id: 203, name: "라면", price: 4000, options: ["기본", "치즈 추가", "떡 추가"] },
     ],
   },
 
@@ -93,7 +93,7 @@ export const restaurants = [
     image: "/src/assets/8.jpeg",
     menus: [
       { id: 801, name: "라볶이", price: 9500, options: ["기본", "계란 추가"] },
-      { id: 802, name: "치즈볼", price: 4000 },
-      { id: 803, name: "계란말이", price: 7000 },
+      { id: 802, name: "치즈볼", price: 4000, options: ["기본", "소스 추가"] },
+      { id: 803, name: "계란말이", price: 7000, options: ["기본", "소스 추가"] },
     ],
   } ]
