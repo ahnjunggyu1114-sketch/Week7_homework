@@ -1,8 +1,5 @@
-import { useState } from "react";
-
-export default function MenuModal({ restaurant, onClose, quantities, setQuantities }) {
-
-  const [selectedOptions, setSelectedOptions] = useState({});
+export default function MenuModal({ restaurant, onClose, quantities, setQuantities, selectedOptions, setSelectedOptions }) {
+// ↑ useState 지우고 props로 받아!
 
   const handleAdd = (menuId) => {
     setQuantities({ ...quantities, [menuId]: 1 });

@@ -13,8 +13,14 @@ export default function Navbar() {
         <span className="text-xl font-bold">🍢 분식 배달</span>
         <div className="flex items-center gap-3">
           <button
+            onClick={() => navigate("/credit")}
+            className="text-white text-sm font-bold hover:opacity-70"
+          >
+            💳 
+          </button>
+          <button
             onClick={() => navigate("/payment")}
-            className="text-white text-2xl hover:opacity-70"
+            className="text-white text-xl hover:opacity-70"
           >
             🛒
           </button>
@@ -42,8 +48,14 @@ export default function Navbar() {
         {isOpen && (
           <div className="flex flex-col gap-4 mt-4 pb-2">
             <button
+              onClick={() => navigate("/credit")}
+              className="text-white text-sm font-bold hover:opacity-70"
+            >
+              💳 크레딧
+            </button>
+            <button
               onClick={() => navigate("/payment")}
-              className="text-white text-2xl hover:opacity-70"
+              className="text-white text-sm font-bold hover:opacity-70"
             >
               🛒 장바구니
             </button>
