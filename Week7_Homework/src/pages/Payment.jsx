@@ -6,11 +6,15 @@ import mockData from "../data/shopping_mockdata.js"
 import Navbar from "../components/Navbar";
 import { restaurants } from "../data/restaurants";
 import { useState } from "react";
+import useAuthStore from "../stores/useAuthStore";
 
 
 
 const Payment = () => {
     const navigate = useNavigate();
+
+    const user = useAuthStore((state) => state.user);
+
     const [quantities, setQuantities] = useState(
         JSON.parse(localStorage.getItem("quantities")) || {}
     );
@@ -103,7 +107,10 @@ const Payment = () => {
                     </div>
                 )}
                 <div className="">
-                    <PaymentBox totalprice={totalprice} />
+                    <PaymentBox
+                        totalprice={totalprice}
+                        currentCredit={user?.credit || 0}
+                    />
                 </div>
             </div>
         </div>
