@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import PageNotFound from './pages/PageNotFound'
 import Complete from './pages/Complete'
 import useAuthStore from "./stores/useAuthStore";
+import Credit from "./pages/Credit";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/payment" element={user ? <Payment /> : <Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
         <Route path="/complete" element={user ? <Complete /> : <Navigate to="/login" replace />} />
+        <Route path="/credit" element={user ? <Credit /> : <Navigate to="/login" replace />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
