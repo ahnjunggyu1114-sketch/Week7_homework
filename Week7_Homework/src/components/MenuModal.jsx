@@ -24,7 +24,7 @@ export default function MenuModal({ restaurant, onClose, quantities, setQuantiti
       className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="bg-white w-full max-w-sm rounded-[20px] max-h-[80vh] overflow-y-auto mx-4">
+      <div className="bg-white w-full max-w-xl rounded-[20px] ...">
 
         {/* 헤더 */}
         <div className="flex justify-between items-center p-5 border-b border-gray-100">

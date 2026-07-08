@@ -13,7 +13,11 @@ const ShoppingCart = ({ restaurant, onPlus, onMinus, onDelete }) => {
                     <div key={menu.id} className="">
                         <div className="flex flex-col dt:flex-row dt:justify-between items-center px-[24px] py-[12px] dt:gap-[118px]">
                             <div className="text-[24px]">
-                                <p>{menu.name}</p>
+                            <p>{menu.name}</p>
+                             {/* 옵션 표시 추가 */}
+                                {menu.option && (
+                                 <p className="text-[14px] text-[#858585]">{menu.option}</p>
+                             )}
                                 <p className="text-[#F0485F]">{menu.price.toLocaleString()}원</p>
                             </div>
                             <div className=" flex gap-[32px] text-[24px] items-center justify-center dt:py-[12px] ">
