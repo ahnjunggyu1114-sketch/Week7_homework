@@ -40,10 +40,10 @@ const Credit = () => {
                         크레딧 충전하기
                     </h1>
 
-                    <div className="flex justify-center gap-[8px] mb-[32px]">
+                    <div className="grid grid-cols-2 dt:grid-cols-4 gap-x-[12px] gap-y-[16px] justify-items-center mb-[32px]">
                         <button
                             className={`w-[88px] h-[36px] rounded-[5px] ${
-                                selectedAmount === 1000 ? "bg-[#98D2B8] text-white" : ""
+                                selectedAmount === 1000 ? "bg-[#98D2B8] text-white" : "bg-[#F7F7F7] text-black"
                             }`}
                             type="button"
                             onClick={() => setSelectedAmount(1000)}
@@ -52,7 +52,7 @@ const Credit = () => {
                         </button>
                         <button
                             className={`w-[88px] h-[36px] rounded-[5px] ${
-                                selectedAmount === 3000 ? "bg-[#98D2B8] text-white" : ""
+                                selectedAmount === 3000 ? "bg-[#98D2B8] text-white" : "bg-[#F7F7F7] text-black"
                             }`}
                             type="button"
                             onClick={() => setSelectedAmount(3000)}
@@ -61,7 +61,7 @@ const Credit = () => {
                         </button>
                         <button
                             className={`w-[88px] h-[36px] rounded-[5px] ${
-                                selectedAmount === 5000 ? "bg-[#98D2B8] text-white" : ""
+                                selectedAmount === 5000 ? "bg-[#98D2B8] text-white" : "bg-[#F7F7F7] text-black"
                             }`}
                             type="button"
                             onClick={() => setSelectedAmount(5000)}
@@ -70,7 +70,7 @@ const Credit = () => {
                         </button>
                         <button
                             className={`w-[88px] h-[36px] rounded-[5px] ${
-                                selectedAmount === 10000 ? "bg-[#98D2B8] text-white" : ""
+                                selectedAmount === 10000 ? "bg-[#98D2B8] text-white" : "bg-[#F7F7F7] text-black"
                             }`}
                             type="button"
                             onClick={() => setSelectedAmount(10000)}
@@ -79,21 +79,21 @@ const Credit = () => {
                         </button>
                     </div>
 
-                    <div className="mb-[56px] bg-[#F7F7F7F] rounded-[8px] px-[16px] py-[18px]">
+                    <div className="mb-[56px] bg-[#F7F7F7] rounded-[8px] px-[16px] py-[18px]">
                         <div className="flex justify-between items-center mb-[14px]">
                             <p className="">보유 크레딧</p>
                             <p className="">{currentCredit}C</p>
                         </div>
 
                         <div className="flex justify-between items-center">
-                            <p className="">충전 후 크레딧</p>
-                            <p className="">{afterCredit}C</p>
+                            <p className="font-semibold text-[#F0485F]">충전 후 크레딧</p>
+                            <p className="font-semibold text-[#F0485F]">{afterCredit}C</p>
                         </div>
                     </div>
 
                     <div className="flex justify-between items-center mb-[28px]">
-                        <p className="">결제금액</p>
-                        <p className="">{selectedAmount.toLocaleString()}원</p>
+                        <p className="font-semibold">결제금액</p>
+                        <p className="font-semibold">{selectedAmount.toLocaleString()}원</p>
                     </div>
 
                     <div className="flex justify-center">
