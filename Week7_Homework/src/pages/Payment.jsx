@@ -15,13 +15,16 @@ const Payment = () => {
         JSON.parse(localStorage.getItem("quantities")) || {}
     );
 
+    const selectedOptions = JSON.parse(localStorage.getItem("selectedOptions")) || {};
+
     const cartItems = restaurants
         .map((restaurant) => {
             const selectedMenus = restaurant.menus
             .filter((menu) => quantities[menu.id])
             .map((menu) => ({
                 ...menu,
-                count: quantities[menu.id],
+                count: quantities[menu.id] ,
+                option: selectedOptions[menu.id] || null,
             }));
 
             return {
