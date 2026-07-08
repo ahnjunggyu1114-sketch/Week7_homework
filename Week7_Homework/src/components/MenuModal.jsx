@@ -6,7 +6,7 @@ export default function MenuModal({ restaurant, onClose, quantities, setQuantiti
   };
 
   const handleIncrease = (menuId) => {
-    setQuantities({ ...quantities, [menuId]: quantities[menuId] + 1 });
+    setQuantities({ ...quantities, [menuId]: (quantities[menuId] || 0) + 1 });
   };
 
   const handleDecrease = (menuId) => {
@@ -71,20 +71,15 @@ export default function MenuModal({ restaurant, onClose, quantities, setQuantiti
 
               {/* 수량 버튼 */}
               <div className="flex justify-end">
-                {quantities[menu.id] ? (
-                  <div className="flex items-center gap-2">
-                    <button onClick={() => handleDecrease(menu.id)}
-                      className="w-7 h-7 rounded-[20px] bg-[#F0485F] text-white font-bold">-</button>
-                    <span className="text-sm font-bold w-4 text-center">{quantities[menu.id]}</span>
-                    <button onClick={() => handleIncrease(menu.id)}
-                      className="w-7 h-7 rounded-[16px] bg-[#F0485F] text-white font-bold">+</button>
-                  </div>
-                ) : (
-                  <button onClick={() => handleAdd(menu.id)}
-                    className="bg-[#F0485F] text-white px-3 py-1 rounded-[16px] text-xs font-bold">
-                    담기
-                  </button>
-                )}
+                <div className="flex items-center gap-2">
+                  <button onClick={() => handleDecrease(menu.id)}
+                    className="w-7 h-7 rounded-[16px] bg-[#F0485F] text-white font-bold">-</button>
+                   <span className="text-sm font-bold w-4 text-center">
+                    {quantities[menu.id] || 0}
+                  </span>
+                  <button onClick={() => handleIncrease(menu.id)}
+                    className="w-7 h-7 rounded-[16px] bg-[#F0485F] text-white font-bold">+</button>
+                </div>
               </div>
 
             </li>
