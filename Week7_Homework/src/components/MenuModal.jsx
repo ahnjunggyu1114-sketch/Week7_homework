@@ -1,15 +1,11 @@
 export default function MenuModal({ restaurant, onClose, quantities, setQuantities, selectedOptions, setSelectedOptions }) {
-// ↑ useState 지우고 props로 받아!
-
-  const handleAdd = (menuId) => {
-    setQuantities({ ...quantities, [menuId]: 1 });
-  };
 
   const handleIncrease = (menuId) => {
     setQuantities({ ...quantities, [menuId]: (quantities[menuId] || 0) + 1 });
   };
 
   const handleDecrease = (menuId) => {
+    if (!quantities[menuId] || quantities[menuId] === 0) return;
     if (quantities[menuId] === 1) {
       const newQuantities = { ...quantities };
       delete newQuantities[menuId];
@@ -19,12 +15,32 @@ export default function MenuModal({ restaurant, onClose, quantities, setQuantiti
     }
   };
 
+  // 옵션 토글 - 중복 선택 가능 (배열로 저장)
+  const handleOptionToggle = (menuId, option) => {
+    const current = selectedOptions[menuId] || [];
+    // 이미 선택된 옵션이면 제거, 없으면 추가
+    const updated = current.includes(option.name)
+      ? current.filter((o) => o !== option.name)
+      : [...current, option.name];
+    setSelectedOptions({ ...selectedOptions, [menuId]: updated });
+  };
+
+  // 선택한 옵션 추가금액 계산
+  const getOptionPrice = (menu) => {
+    const selected = selectedOptions[menu.id] || [];
+    return menu.options
+      ? menu.options
+          .filter((opt) => selected.includes(opt.name))
+          .reduce((sum, opt) => sum + opt.price, 0)
+      : 0;
+  };
+
   return (
     <div
       className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
-      <div className="bg-white w-full max-w-xl rounded-[20px] ...">
+      <div className="bg-white w-full max-w-xl rounded-[20px] max-h-[80vh] overflow-y-auto mx-4">
 
         {/* 헤더 */}
         <div className="flex justify-between items-center p-5 border-b border-gray-100">
@@ -46,26 +62,31 @@ export default function MenuModal({ restaurant, onClose, quantities, setQuantiti
               <div className="flex justify-between items-start mb-2">
                 <span className="text-sm font-medium">{menu.name}</span>
                 <span className="text-sm font-bold text-[#F0485F]">
-                  {menu.price.toLocaleString()}원
+                  {/* 옵션 추가금액 합산해서 표시 */}
+                  {(menu.price + getOptionPrice(menu)).toLocaleString()}원
                 </span>
               </div>
 
-              {/* 옵션 태그들 */}
+              {/* 옵션 태그들 - 중복 선택 가능 */}
               {menu.options && (
                 <div className="flex flex-wrap gap-1.5 mb-2">
-                  {menu.options.map((option) => (
-                    <button
-                      key={option}
-                      onClick={() => setSelectedOptions({ ...selectedOptions, [menu.id]: option })}
-                      className={`px-2 py-0.5 text-xs rounded-[20px] border transition-colors ${
-                        selectedOptions[menu.id] === option
-                          ? "border-[#F0485F] bg-[#F0485F] text-white"
-                          : "border-[#F0485F] text-[#F0485F] hover:bg-pink-50"
-                      }`}
-                    >
-                      {option}
-                    </button>
-                  ))}
+                  {menu.options.map((option) => {
+                    const isSelected = (selectedOptions[menu.id] || []).includes(option.name);
+                    return (
+                      <button
+                        key={option.name}
+                        onClick={() => handleOptionToggle(menu.id, option)}
+                        className={`px-2 py-0.5 text-xs rounded-[20px] border transition-colors ${
+                          isSelected
+                            ? "border-[#F0485F] bg-[#F0485F] text-white"
+                            : "border-[#F0485F] text-[#F0485F] hover:bg-pink-50"
+                        }`}
+                      >
+                        {/* 추가금액 있으면 표시 */}
+                        {option.name}{option.price > 0 ? ` (+${option.price.toLocaleString()}원)` : ""}
+                      </button>
+                    );
+                  })}
                 </div>
               )}
 
@@ -74,7 +95,7 @@ export default function MenuModal({ restaurant, onClose, quantities, setQuantiti
                 <div className="flex items-center gap-2">
                   <button onClick={() => handleDecrease(menu.id)}
                     className="w-7 h-7 rounded-[16px] bg-[#F0485F] text-white font-bold">-</button>
-                   <span className="text-sm font-bold w-4 text-center">
+                  <span className="text-sm font-bold w-4 text-center">
                     {quantities[menu.id] || 0}
                   </span>
                   <button onClick={() => handleIncrease(menu.id)}
