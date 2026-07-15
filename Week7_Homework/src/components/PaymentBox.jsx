@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../stores/useAuthStore";
+import { changeCredit } from "../apis/credit";
 
 
 const PaymentBox = ( { totalprice, currentCredit } ) => {
@@ -16,23 +17,34 @@ const PaymentBox = ( { totalprice, currentCredit } ) => {
         navigate("/credit");
     };
 
-    const handlePayment = () => {
-        
+    const handlePayment = async () => {
         if (!isCreditEnough) {
             alert("크레딧이 부족합니다.");
             return;
         }
-        const updatedUser = {
-            ...user,
-            credit: currentCredit - totalprice,
-        };
-        setUser(updatedUser);
-        const savedUsers = JSON.parse(localStorage.getItem("users")) || [];
-        const updatedUsers = savedUsers.map((savedUser) =>
-            savedUser.username === user.username ? updatedUser : savedUser
-        );
-        localStorage.setItem("users", JSON.stringify(updatedUsers));
-        navigate("/complete");
+        try {
+            const result = await changeCredit({
+                amount: totalprice,
+                type: "USE",
+            });
+            if (!result.success) {
+                alert(result.message);
+                return;
+            }
+            const updatedUser = {
+                ...user,
+                credit: currentCredit - totalprice,
+            };
+            setUser(updatedUser);
+            navigate("/complete");
+        } catch (error) {
+            console.log("크레딧 사용 에러:", error.response?.data || error);
+            if (error.response?.data?.message) {
+                alert(error.response.data.message);
+            } else {
+                alert("결제 중 오류가 발생했습니다.");
+            }
+        }
     };
     
     return (
