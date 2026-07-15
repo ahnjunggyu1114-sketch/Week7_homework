@@ -1,6 +1,7 @@
 import Navbar from "../components/Navbar";
 import { useState } from "react";
 import useAuthStore from "../stores/useAuthStore";
+import { changeCredit } from "../apis/credit";
 
 const Credit = () => {
     const [selectedAmount, setSelectedAmount] = useState(0);
@@ -11,23 +12,35 @@ const Credit = () => {
     const currentCredit = user?.credit || 0;
     const afterCredit = currentCredit + selectedAmount;
 
-    const handleCharge = () => {
+    const handleCharge = async () => {
         if (!selectedAmount) {
         alert("충전 금액을 선택해주세요.");
         return;
         }
-        const updatedUser = {
-        ...user,
-        credit: currentCredit + selectedAmount,
-        };
-        setUser(updatedUser);
-        const savedUsers = JSON.parse(localStorage.getItem("users")) || [];
-        const updatedUsers = savedUsers.map((savedUser) =>
-        savedUser.username === user.username ? updatedUser : savedUser
-        );
-        localStorage.setItem("users", JSON.stringify(updatedUsers));
-        alert("크레딧 충전 완료");
-        setSelectedAmount(0);
+        try {
+            const result = await changeCredit({
+                amount: selectedAmount,
+                type: "CHARGE",
+            });
+            if (!result.success) {
+                alert(result.message);
+                return;
+            }
+            const updatedUser = {
+                ...user,
+                credit: currentCredit + selectedAmount,
+            };
+            setUser(updatedUser);
+            alert("크레딧 충전 완료");
+            setSelectedAmount(0);
+        } catch (error) {
+            console.log("크레딧 충전 에러:", error.response?.data || error);
+            if (error.response?.data?.message) {
+                alert(error.response.data.message);
+            } else {
+                alert("크레딧 충전 중 오류가 발생했습니다.");
+            }
+        }
     };
 
     return (

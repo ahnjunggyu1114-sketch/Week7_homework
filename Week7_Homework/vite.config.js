@@ -8,7 +8,7 @@ export default defineConfig({
     tailwindcss(),
   ],
   server: {
-    port: 8080,
+    port: 5173,
     proxy: {
       "/api": {
         target: "https://mutsa.dev.me.kr",
