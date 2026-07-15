@@ -11,15 +11,14 @@ import Credit from "./pages/Credit";
 
 function App() {
 
-  const user = useAuthStore((state) => state.user);
-  return (
+const accessToken = useAuthStore((state) => state.accessToken);  return (
     <BrowserRouter>
       <Routes>
-        <Route path="/"   element={user ? <MainPage /> : <Navigate to="/login" replace />} />
-        <Route path="/payment" element={user ? <Payment /> : <Navigate to="/login" replace />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/complete" element={user ? <Complete /> : <Navigate to="/login" replace />} />
-        <Route path="/credit" element={user ? <Credit /> : <Navigate to="/login" replace />} />
+        <Route path="/"   element={accessToken ? <MainPage /> : <Navigate to="/login" replace />} />
+        <Route path="/payment" element={accessToken ? <Payment /> : <Navigate to="/login" replace />} />
+        <Route path="/login" element={accessToken ? <Navigate to="/" replace /> : <Login />} />
+        <Route path="/complete" element={accessToken ? <Complete /> : <Navigate to="/login" replace />} />
+        <Route path="/credit" element={accessToken ? <Credit /> : <Navigate to="/login" replace />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </BrowserRouter>
