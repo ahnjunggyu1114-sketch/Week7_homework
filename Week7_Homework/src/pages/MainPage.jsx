@@ -53,9 +53,10 @@ export default function MainPage() {
       name: menu.name,
       price: menu.price,
       options: menu.options.map((opt) => ({
-        name: opt.name,
-        price: opt.additionalPrice,
-      })),
+        id: opt.menuOptionId,
+                name: opt.name,
+                price: opt.additionalPrice,
+              })),
     }));
     setSelectedRestaurant({ ...restaurant, menus: mappedMenus });
   };
