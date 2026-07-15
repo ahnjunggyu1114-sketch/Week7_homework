@@ -27,7 +27,7 @@ export default function MainPage() {
       const mapped = shops.map((shop) => ({
         id: shop.shopId,
         name: shop.name,
-        image: "/placeholder.png",
+        image: shop.imageUrl,
         rating: null,
       }));
       setRestaurants(mapped);
