@@ -1,8 +1,9 @@
 import { useState } from "react";
-
+import { signup } from "../apis/auth";
 
 const RegisterCard = () => {
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
 
@@ -17,7 +18,11 @@ const RegisterCard = () => {
         /*.{8,16}                                       : 8~16자리          */
         /* $                                            : 문자열 끝           */
 
-    const handleRegister = () => {
+    const handleRegister = async () => {
+        if (!name || !email || !password || !confirmPassword) {
+            alert("모든 값을 입력해주세요.");
+            return;
+        }
         if (!passwordRegex.test(password)) {
             alert("비밀번호는 8~16자이며, 숫자/영문/특수문자를 각각 1개 이상 포함해야 합니다.");
             return;
@@ -26,25 +31,29 @@ const RegisterCard = () => {
             alert("비밀번호가 일치하지 않습니다.");
             return;
         }
+        try {
+            const result = await signup({ email, password, name });
 
-        const newUser = {
-            id: Date.now(),
-            username,
-            password,
-        };
-        const savedUsers = JSON.parse(localStorage.getItem("users")) || [];
-
-        savedUsers.push(newUser);
-        localStorage.setItem("users", JSON.stringify(savedUsers));
-        alert("회원가입 성공");
-        setUsername("");
-        setPassword("");
-        setConfirmPassword("");
-
+            if (!result.success) {
+                alert(result.message);
+                return;
+            }
+            alert("회원가입 성공");
+            setName("");
+            setEmail("");
+            setPassword("");
+            setConfirmPassword("");
+        } catch (error) {
+            if (error.response?.data?.message) {
+                alert(error.response.data.message);
+            } else {
+                alert("회원가입 중 오류가 발생했습니다.");
+            }
+        }
     };
     
-    const checkButtonOn = (nextUsername, nextPassword, nextConfirmPassword) => {
-        if (nextUsername && nextPassword && nextConfirmPassword) {
+    const checkButtonOn = (nextName, nextEmail, nextPassword, nextConfirmPassword) => {
+        if (nextName && nextEmail && nextPassword && nextConfirmPassword) {
             setButtonOn(true);
         } else {
             setButtonOn(false);
@@ -63,11 +72,26 @@ const RegisterCard = () => {
                         className="w-[280px] dt:w-[533px] px-[16px] py-[16px] text-[#CAC8C8] text-[20px] border border-[#CAC8C8] rounded-[5px]"
                         type="text"
                         placeholder="아이디를 입력하세요"
-                        value={username}
+                        value={name}
                         onChange={(e) => {
                             const value = e.target.value;
-                            setUsername(e.target.value)
-                            checkButtonOn(value, password, confirmPassword);
+                            setName(e.target.value)
+                            checkButtonOn(value, email, password, confirmPassword);
+                        }}
+                    />
+                </div>
+                
+                <div>
+                    <p className="text-[20px] pb-[12px]">이메일</p>
+                    <input
+                        className="w-[280px] dt:w-[533px] px-[16px] py-[16px] text-[#CAC8C8] text-[20px] border border-[#CAC8C8] rounded-[5px]"
+                        type="email"
+                        placeholder="이메일을 입력하세요"
+                        value={email}
+                        onChange={(e) => {
+                            const value = e.target.value;
+                            setEmail(value);
+                            checkButtonOn(name, value, password, confirmPassword);
                         }}
                     />
                 </div>
@@ -82,7 +106,7 @@ const RegisterCard = () => {
                         onChange={(e) => {
                             const value = e.target.value;
                             setPassword(e.target.value);
-                            checkButtonOn(username, value, confirmPassword);
+                            checkButtonOn(name, email, value, confirmPassword);
                         }}
                     />
                 </div>
@@ -97,7 +121,7 @@ const RegisterCard = () => {
                         onChange={(e) => {
                             const value = e.target.value;
                             setConfirmPassword(e.target.value);
-                            checkButtonOn(username, password, value);
+                            checkButtonOn(name, email, password, value);
                         }}
                     />
                 </div>

@@ -7,4 +7,14 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  server: {
+    port: 5173,
+    proxy: {
+      "/api": {
+        target: "https://mutsa.dev.me.kr",
+        changeOrigin: true,
+        secure: true,
+      },
+    },
+  },
 })

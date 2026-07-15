@@ -5,12 +5,16 @@ const useAuthStore = create(
     persist(
         (set, get) => ({
             user: null,
+            accessToken: null,
 
             setUser: (user) => set({ user }),
+            setAccessToken: (token) => set({ accessToken: token }),
 
-            clearUser: () => set({ user: null }),
+            login: (user, accessToken) => set({ user, accessToken }),
 
-            isLoggedIn: () => !!get().user,
+            clearAuth: () => set({ user: null, accessToken: null }),
+
+            isLoggedIn: () => !!get().accessToken,
         }),
         {
             name: "auth-storage",

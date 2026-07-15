@@ -3,17 +3,18 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import userData from "../data/userData";
 import useAuthStore from "../stores/useAuthStore";
+import { login } from "../apis/auth";
 
 
 
 const LoginCard = () => {
     const [isRegisterOpen, setIsRegisterOpen] = useState(false);
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [buttonOn, setButtonOn] = useState(false);
 
     const navigate = useNavigate();
-    const setUser = useAuthStore((state) => state.setUser);
+    const setAccessToken = useAuthStore((state) => state.setAccessToken);
 
     const handleClickRegister = () => {
         setIsRegisterOpen(true);
@@ -23,29 +24,36 @@ const LoginCard = () => {
         return <RegisterCard />;
     }
 
-    const checkButtonOn = (nextUsername, nextPassword) => {
-        if (nextUsername && nextPassword) {
+    const checkButtonOn = (nextEmail, nextPassword) => {
+        if (nextEmail && nextPassword) {
         setButtonOn(true);
         } else {
         setButtonOn(false);
         }
     };
 
-    const handleLogin = () => {
-        const savedUsers = JSON.parse(localStorage.getItem("users")) || [];
-        const allUsers = [...userData, ...savedUsers];
-        const foundUser = allUsers.find(
-            (user) => user.username === username && user.password === password
-        );
+    const handleLogin = async () => {
+        try {
+            const result = await login({ email, password });
+            console.log("로그인 응답 전체:", result);
+            console.log("토큰 값:", result?.data?.accessToken);
 
-        if (!foundUser) {
-            alert("로그인 실패");
+            if (!result.success) {
+            alert(result.message);
             return;
-        }
+            }
 
-        setUser(foundUser);        
-        alert("로그인 성공");
-        navigate("/");
+            const accessToken = result.data.accessToken;
+            setAccessToken(accessToken);
+
+            console.log("저장 직전 accessToken:", accessToken);
+
+            alert("로그인 성공");
+            navigate("/");
+        } catch (error) {
+            console.log("로그인 에러:", error.response?.data || error);
+            alert("로그인 중 오류가 발생했습니다.");
+        }
     };
     
     return (
@@ -56,14 +64,14 @@ const LoginCard = () => {
 
             <div className="p-[16px] flex flex-col gap-[48px]">
                 <div className="">
-                    <p className="text-[20px] pb-[12px]">아이디</p>
+                    <p className="text-[20px] pb-[12px]">아이디(이메일)</p>
                     <input
                         className="w-[280px] dt:w-[533px] px-[16px] py-[16px] text-[#CAC8C8] text-[20px] border border-[#CAC8C8] rounded-[5px]"
                         type="text"
-                        placeholder="아이디를 입력하세요"
+                        placeholder="아이디(이메일)를 입력하세요"
                         onChange={(e) => {
                         const value = e.target.value;
-                        setUsername(value);
+                        setEmail(value);
                         checkButtonOn(value, password);
                         }}
                     />
@@ -79,7 +87,7 @@ const LoginCard = () => {
                         onChange={(e) => {
                             const value = e.target.value;
                             setPassword(value);
-                            checkButtonOn(username, value);
+                            checkButtonOn(email, value);
                         }}  
                     />
                 </div>
