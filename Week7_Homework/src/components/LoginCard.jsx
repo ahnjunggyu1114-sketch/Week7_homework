@@ -1,7 +1,7 @@
 import RegisterCard from "./RegisterCard";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import userData from "../data/userData";
+
 import useAuthStore from "../stores/useAuthStore";
 import { login } from "../apis/auth";
 
