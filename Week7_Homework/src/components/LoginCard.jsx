@@ -35,23 +35,24 @@ const LoginCard = () => {
     const handleLogin = async () => {
         try {
             const result = await login({ email, password });
+            console.log("로그인 응답 전체:", result);
+            console.log("토큰 값:", result?.data?.accessToken);
 
             if (!result.success) {
-                alert(result.message);
-                return;
+            alert(result.message);
+            return;
             }
 
             const accessToken = result.data.accessToken;
-
             setAccessToken(accessToken);
+
+            console.log("저장 직전 accessToken:", accessToken);
+
             alert("로그인 성공");
             navigate("/");
         } catch (error) {
-            if (error.response?.data?.message) {
-                alert(error.response.data.message);
-            } else {
-                alert("로그인 중 오류가 발생했습니다.");
-            }
+            console.log("로그인 에러:", error.response?.data || error);
+            alert("로그인 중 오류가 발생했습니다.");
         }
     };
     
