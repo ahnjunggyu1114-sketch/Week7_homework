@@ -5,34 +5,45 @@ import { axiosInstance } from "../services/axiosInstance";
 
 export default function KakaoSuccess() {
   const navigate = useNavigate();
+
+  const setAccessToken = useAuthStore((state) => state.setAccessToken);
   const setUser = useAuthStore((state) => state.setUser);
 
   useEffect(() => {
     const handleSuccess = async () => {
-      // URL에서 accessToken 꺼내기
-      // 예: /oauth/success?accessToken=eyJhbG...
-      const params = new URLSearchParams(window.location.search);
-      const token = params.get("accessToken");
+      try {
+        // URL에서 accessToken 꺼내기
+        // 예: /oauth/success?accessToken=eyJhbG...
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get("accessToken");
 
-      if (!token) {
-        navigate("/login");
-        return;
-      }
+        if (!token) {
+          navigate("/login", { replace: true });
+          return;
+        }
 
-      // 토큰 로컬스토리지에 저장
-      localStorage.setItem("accessToken", token);
 
-      // 내 정보 조회해서 유저 정보 저장
-      const response = await axiosInstance.get("/api/users/me");
-      const user = response.data.data;
-      setUser(user);
+          // 먼저 Zustand에 토큰 저장
+          setAccessToken(token);
+          // 토큰 저장 후 내 정보 조회
+          const response = await axiosInstance.get("/api/users/me");
+          const user = response.data.data;
 
-      // 홈으로 이동
-      navigate("/");
-    };
+          setUser(user);
 
-    handleSuccess();
-  }, []);
+          navigate("/", { replace: true });
+      } catch (error) {
+          console.error(
+            "카카오 로그인 처리 실패:",
+            error.response?.data || error
+          );
+          alert("카카오 로그인 처리 중 오류가 발생했습니다.");
+          navigate("/login", { replace: true });
+        }
+      };
+
+      handleSuccess();
+    }, [navigate, setAccessToken, setUser]);
 
   return (
     <div className="flex items-center justify-center h-screen">
