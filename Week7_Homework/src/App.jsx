@@ -1,4 +1,5 @@
-
+import KakaoSuccess from "./pages/KakaoSuccess";
+import KakaoFailure from "./pages/KakaoFailure";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import MainPage from './pages/MainPage'
 import Payment from './pages/Payment'
@@ -15,6 +16,8 @@ function App() {
 const accessToken = useAuthStore((state) => state.accessToken);  return (
     <BrowserRouter>
       <Routes>
+        <Route path="/oauth/success" element={<KakaoSuccess />} />
+        <Route path="/oauth/failure" element={<KakaoFailure />} />
         <Route path="/"   element={accessToken ? <MainPage /> : <Navigate to="/login" replace />} />
         <Route path="/payment" element={accessToken ? <Payment /> : <Navigate to="/login" replace />} />
         <Route path="/login" element={accessToken ? <Navigate to="/" replace /> : <Login />} />
