@@ -62,11 +62,11 @@ const LoginCard = () => {
 
             <div className="p-[16px] flex flex-col gap-[48px]">
                 <div className="">
-                    <p className="text-[20px] pb-[12px]">아이디(이메일)</p>
+                    <p className="text-[20px] pb-[12px]">이메일</p>
                     <input
-                        className="w-[280px] dt:w-[533px] px-[16px] py-[16px] text-[#CAC8C8] text-[20px] border border-[#CAC8C8] rounded-[5px]"
+                        className="w-[280px]  dt:w-[533px] px-[16px] py-[16px] text-black placeholder:text-[#CAC8C8] text-[20px] border border-[#CAC8C8] rounded-[5px]"
                         type="text"
-                        placeholder="아이디(이메일)를 입력하세요"
+                        placeholder="이메일을 입력하세요"
                         onChange={(e) => {
                         const value = e.target.value;
                         setEmail(value);
@@ -78,7 +78,7 @@ const LoginCard = () => {
                 <div className="">
                     <p className="text-[20px] pb-[12px]">비밀번호</p>
                     <input
-                        className="w-[280px] dt:w-[533px] px-[16px] py-[16px] text-[#CAC8C8] text-[20px] border border-[#CAC8C8] rounded-[5px]"
+                        className="w-[280px] dt:w-[533px] px-[16px] py-[16px] text-black placeholder:text-[#CAC8C8] text-[20px] border border-[#CAC8C8] rounded-[5px]"
                         type="password"
                         placeholder="비밀번호를 입력하세요"
                         value={password}
