@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useAuthStore from "../stores/useAuthStore";
+import { axiosInstance } from "../services/axiosInstance";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -9,11 +10,20 @@ export default function Navbar() {
   const accessToken = useAuthStore((state) => state.accessToken);
   const clearAuth = useAuthStore((state) => state.clearAuth);
 
-  const handleLogout = () => {
-    clearAuth();
-    navigate("/login", { replace: true });
+  const handleLogout = async() => {
+   try {
+      await axiosInstance.post("/api/auth/logout");
+    } catch (error) {
+      console.error(
+        "로그아웃 API 오류:",
+        error.response?.data || error
+      );
+    } finally {
+      clearAuth();
+      navigate("/login", { replace: true });
+    }
+  };
 
-  }
 
   return (
     <nav className="bg-[#F0485F] text-white px-6 py-4">
