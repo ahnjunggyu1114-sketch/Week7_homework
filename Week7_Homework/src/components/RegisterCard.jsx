@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { signup } from "../apis/auth";
+import { useNavigate } from "react-router-dom";
 
 const RegisterCard = () => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
@@ -43,6 +45,7 @@ const RegisterCard = () => {
             setEmail("");
             setPassword("");
             setConfirmPassword("");
+            navigate("/login", { replace: true });
         } catch (error) {
             if (error.response?.data?.message) {
                 alert(error.response.data.message);

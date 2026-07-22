@@ -1,4 +1,3 @@
-import RegisterCard from "./RegisterCard";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -8,7 +7,6 @@ import { login } from "../apis/auth";
 
 
 const LoginCard = () => {
-    const [isRegisterOpen, setIsRegisterOpen] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [buttonOn, setButtonOn] = useState(false);
@@ -17,12 +15,12 @@ const LoginCard = () => {
     const setAccessToken = useAuthStore((state) => state.setAccessToken);
 
     const handleClickRegister = () => {
-        setIsRegisterOpen(true);
+        navigate("/register");
     };
-
-    if (isRegisterOpen) {
-        return <RegisterCard />;
-    }
+    const handleKakaoLogin = () => {
+        window.location.href =
+            `${import.meta.env.VITE_API_BASE_URL}/oauth2/authorization/kakao`;
+    };
 
     const checkButtonOn = (nextEmail, nextPassword) => {
         if (nextEmail && nextPassword) {
@@ -104,7 +102,7 @@ const LoginCard = () => {
                 </button>
             </div>
             
-            <div className="flex justify-center">
+            <div className="flex flex-col items-center justify-center gap-[16px]">
                 <button 
                     className={`w-[190px] px-[64px] py-[16px] text-[20px] rounded-[16px] cursor-pointer ${
                         buttonOn
@@ -115,6 +113,14 @@ const LoginCard = () => {
                     onClick={handleLogin}
                 >
                     로그인
+                </button>
+
+                <button
+                    className="w-[180px] dt:w-[280px] py-[16px] text-[20px] rounded-[16px] bg-[#FEE500] text-[#191919] cursor-pointer"
+                    type="button"
+                    onClick={handleKakaoLogin}
+                >
+                    카카오로 로그인
                 </button>
             </div>
         </div>
