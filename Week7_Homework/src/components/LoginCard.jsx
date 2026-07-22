@@ -17,6 +17,10 @@ const LoginCard = () => {
     const handleClickRegister = () => {
         navigate("/register");
     };
+    const handleKakaoLogin = () => {
+        window.location.href =
+            `${import.meta.env.VITE_API_BASE_URL}/oauth2/authorization/kakao`;
+    };
 
     const checkButtonOn = (nextEmail, nextPassword) => {
         if (nextEmail && nextPassword) {
@@ -98,7 +102,7 @@ const LoginCard = () => {
                 </button>
             </div>
             
-            <div className="flex justify-center">
+            <div className="flex flex-col items-center justify-center gap-[16px]">
                 <button 
                     className={`w-[190px] px-[64px] py-[16px] text-[20px] rounded-[16px] cursor-pointer ${
                         buttonOn
@@ -109,6 +113,14 @@ const LoginCard = () => {
                     onClick={handleLogin}
                 >
                     로그인
+                </button>
+
+                <button
+                    className="w-[180px] dt:w-[280px] py-[16px] text-[20px] rounded-[16px] bg-[#FEE500] text-[#191919] cursor-pointer"
+                    type="button"
+                    onClick={handleKakaoLogin}
+                >
+                    카카오로 로그인
                 </button>
             </div>
         </div>
