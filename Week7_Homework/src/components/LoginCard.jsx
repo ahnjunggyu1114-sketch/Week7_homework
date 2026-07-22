@@ -1,4 +1,3 @@
-import RegisterCard from "./RegisterCard";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -8,7 +7,6 @@ import { login } from "../apis/auth";
 
 
 const LoginCard = () => {
-    const [isRegisterOpen, setIsRegisterOpen] = useState(false);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [buttonOn, setButtonOn] = useState(false);
@@ -17,12 +15,8 @@ const LoginCard = () => {
     const setAccessToken = useAuthStore((state) => state.setAccessToken);
 
     const handleClickRegister = () => {
-        setIsRegisterOpen(true);
+        navigate("/register");
     };
-
-    if (isRegisterOpen) {
-        return <RegisterCard />;
-    }
 
     const checkButtonOn = (nextEmail, nextPassword) => {
         if (nextEmail && nextPassword) {
