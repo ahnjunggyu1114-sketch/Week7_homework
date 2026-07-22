@@ -6,12 +6,12 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
   // 로그인 상태 가져오기
-  const { user } = useAuthStore();
-  const clearUser = useAuthStore((state) => state.clearUser);
+  const accessToken = useAuthStore((state) => state.accessToken);
+  const clearAuth = useAuthStore((state) => state.clearAuth);
 
   const handleLogout = () => {
-    clearUser();
-    navigate("/login");
+    clearAuth();
+    navigate("/login", { replace: true });
   }
 
   return (
@@ -34,7 +34,7 @@ export default function Navbar() {
             🛒
           </button>
           {/* 로그인 상태에 따라 버튼 표시 */}
-          {user ? (
+          {accessToken ? (
           <button
             onClick={handleLogout}
             className="bg-white text-[#F0485F] px-4 py-2 rounded-[16px] font-bold hover:opacity-90"
